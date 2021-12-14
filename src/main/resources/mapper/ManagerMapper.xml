@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student.mapper.ManagerMapper">
+  <resultMap id="BaseResultMap" type="com.student.model.Manager">
+    <!--@mbg.generated-->
+    <!--@Table manager-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="work_id" jdbcType="BIGINT" property="workId" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="reg_time" jdbcType="TIMESTAMP" property="regTime" />
+    <result column="status" jdbcType="BOOLEAN" property="status" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="role" jdbcType="VARCHAR" property="role" />
+    <result column="root" jdbcType="BOOLEAN" property="root" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, username, `password`, work_id, mobile, avatar, gender, birthday, reg_time, `status`, 
+    gmt_create, gmt_modified, `role`, root
+  </sql>
+</mapper>
