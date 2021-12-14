@@ -9,10 +9,7 @@ import com.student.model.Manager;
 import com.student.model.req.LoginReqModel;
 import com.student.service.ManagerService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -20,7 +17,8 @@ import java.util.HashMap;
 /**
  * @date 2021/12/14 20:49
  */
-@RestController("/sys")
+@RestController
+@RequestMapping("/sys")
 @Slf4j
 public class LoginController {
 
