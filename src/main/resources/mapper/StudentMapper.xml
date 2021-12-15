@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.student.model.Student">
+    <!--@mbg.generated-->
+    <!--@Table student-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="student_id" jdbcType="BIGINT" property="studentId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="collage" jdbcType="VARCHAR" property="collage" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="grade" jdbcType="VARCHAR" property="grade" />
+    <result column="admission_time" jdbcType="TIMESTAMP" property="admissionTime" />
+    <result column="room" jdbcType="VARCHAR" property="room" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, student_id, `name`, `password`, gender, collage, major, grade, admission_time, 
+    room, mobile, avatar, gmt_create, gmt_modified
+  </sql>
+</mapper>
