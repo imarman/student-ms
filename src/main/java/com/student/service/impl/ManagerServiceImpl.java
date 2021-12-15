@@ -13,12 +13,13 @@ import com.student.model.req.LoginReqModel;
 import com.student.service.ManagerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
 /**
-    @date 2021/12/14 20:48
-*/
+ * @date 2021/12/14 20:48
+ */
 @Service
 @Slf4j
-public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> implements ManagerService{
+public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> implements ManagerService {
 
     @Override
     public boolean login(LoginReqModel loginReqModel) {
@@ -51,3 +52,4 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
         return true;
     }
 }
+
