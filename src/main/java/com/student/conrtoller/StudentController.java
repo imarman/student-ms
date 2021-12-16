@@ -33,6 +33,7 @@ public class StudentController {
 
     @PostMapping("/saveOrUpdate")
     public R saveOrUpdateStudent(@RequestBody Student student) {
+        log.info("新增或修改学生方法执行，参数：student:{}", student);
         if (student == null) {
             throw new BusinessException(ResultCodeEnum.PARAM_ERROR);
         }
@@ -41,6 +42,7 @@ public class StudentController {
 
     @DeleteMapping("/delete/{id}")
     public R deleteStudent(@PathVariable("id") String studentId) {
+        log.info("删除学生方法执行，参数：studentId:{}", studentId);
         if (studentId == null || StrUtil.isBlank(studentId)) {
             throw new BusinessException(ResultCodeEnum.PARAM_ERROR);
         }
