@@ -1,5 +1,6 @@
 package com.student.conrtoller;
 
+import cn.hutool.core.util.StrUtil;
 import com.student.common.BusinessException;
 import com.student.common.R;
 import com.student.common.ResultCodeEnum;
@@ -28,6 +29,7 @@ public class CollegeController {
 
     @PostMapping("/saveOrUpdate")
     public R saveOrUpdate(@RequestBody College college) {
+        log.info("学院的新增或修改方法执行，参数：college:{}", college);
         if (college == null) {
             throw new BusinessException(ResultCodeEnum.PARAM_ERROR);
         }
@@ -36,7 +38,11 @@ public class CollegeController {
 
     @DeleteMapping("/delete/{id}")
     public R delete(@PathVariable("id") String collegeId) {
-        return collegeService.removeById(collegeId) ? R.ok() : R.error();
+        log.info("学院的删除方法执行，参数：collegeId:{}", collegeId);
+        if (collegeId == null || StrUtil.isBlank(collegeId)) {
+            throw new BusinessException(ResultCodeEnum.PARAM_ERROR);
+        }
+        return collegeService.removeById(collegeId) ? R.ok("删除成功") : R.error("删除失败");
     }
 
 }
