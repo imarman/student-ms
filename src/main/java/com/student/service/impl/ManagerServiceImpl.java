@@ -48,7 +48,7 @@ public class ManagerServiceImpl extends ServiceImpl<ManagerMapper, Manager> impl
         // 存入到 session 时要屏蔽敏感数据
         manager.setPassword(null);
         // 把用户存到 session 中，方便取出用户信息
-        StpUtil.getSession().set("manager", manager);
+        StpUtil.getSession().set("user", manager);
         return true;
     }
 }

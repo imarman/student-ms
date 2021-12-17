@@ -7,7 +7,9 @@ import com.student.common.R;
 import com.student.common.ResultCodeEnum;
 import com.student.model.Manager;
 import com.student.model.req.LoginReqModel;
+import com.student.model.req.StuLoginReqModel;
 import com.student.service.ManagerService;
+import com.student.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +27,23 @@ public class LoginController {
     @Resource
     ManagerService managerService;
 
+    @Resource
+    StudentService studentService;
+
     @PostMapping("/login")
     public R login(@RequestBody LoginReqModel loginReqModel) {
 
         boolean res = managerService.login(loginReqModel);
+        if (res) {
+            SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+            return R.ok(tokenInfo);
+        }
+        return R.error("登陆失败");
+    }
+
+    @PostMapping("/student-login")
+    public R studentLogin(@RequestBody StuLoginReqModel loginReqModel) {
+        boolean res = studentService.login(loginReqModel);
         if (res) {
             SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
             return R.ok(tokenInfo);

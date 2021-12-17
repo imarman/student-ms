@@ -2,6 +2,7 @@ package com.student.service;
 
 import com.student.model.Student;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.student.model.req.StuLoginReqModel;
 import com.student.model.req.StudentReqModel;
 import com.student.model.resp.StudentResponse;
 
@@ -17,4 +18,10 @@ public interface StudentService extends IService<Student> {
      */
     StudentResponse selectByWrapper(StudentReqModel reqModel);
 
+    /**
+     * 学生登陆方法
+     * @param loginReqModel 学生对象
+     * @return 是否成功
+     */
+    boolean login(StuLoginReqModel loginReqModel);
 }
