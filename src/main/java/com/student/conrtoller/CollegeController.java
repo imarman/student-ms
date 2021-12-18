@@ -1,6 +1,9 @@
 package com.student.conrtoller;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.student.common.BusinessException;
 import com.student.common.R;
 import com.student.common.ResultCodeEnum;
@@ -10,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @date 2021/12/16 21:43
@@ -23,8 +27,13 @@ public class CollegeController {
     CollegeService collegeService;
 
     @GetMapping("/list")
-    public R getList() {
-        return R.ok(collegeService.list());
+    public R getList(String name) {
+        LambdaQueryWrapper<College> wrapper = null;
+        if (name != null && StrUtil.isNotBlank(name)) {
+            wrapper = Wrappers.lambdaQuery();
+            wrapper.like(College::getName, name);
+        }
+        return R.ok(collegeService.list(wrapper));
     }
 
     @PostMapping("/saveOrUpdate")
@@ -33,6 +42,10 @@ public class CollegeController {
         if (college == null) {
             throw new BusinessException(ResultCodeEnum.PARAM_ERROR);
         }
+        if (college.getId() == null || StrUtil.isBlank(college.getId())) {
+            college.setGmtCreate(new Date());
+        }
+        college.setGmtModify(new Date());
         return collegeService.saveOrUpdate(college) ? R.ok() : R.error();
     }
 
