@@ -9,5 +9,5 @@ public interface RoleConst {
 
     String MANAGER_ROLE = "MANAGER";
 
-    String LEADER_ROLE = "LEADER";
+    String STUDENT = "STUDENT";
 }

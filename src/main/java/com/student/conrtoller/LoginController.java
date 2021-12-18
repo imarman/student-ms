@@ -5,7 +5,9 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.student.common.R;
 import com.student.common.ResultCodeEnum;
+import com.student.common.RoleConst;
 import com.student.model.Manager;
+import com.student.model.Student;
 import com.student.model.req.LoginReqModel;
 import com.student.model.req.StuLoginReqModel;
 import com.student.service.ManagerService;
@@ -70,10 +72,18 @@ public class LoginController {
         String userID = (String) StpUtil.getLoginId();
         Manager manager = managerService.getById(userID);
         HashMap<String,Object> userInfo = new HashMap<>();
-        userInfo.put("name", manager.getUsername());
-        userInfo.put("role", manager.getRole());
-        userInfo.put("avatar", manager.getAvatar());
-        userInfo.put("id", manager.getId());
+        if (manager != null) {
+            userInfo.put("name", manager.getUsername());
+            userInfo.put("role", manager.getRole());
+            userInfo.put("avatar", manager.getAvatar());
+            userInfo.put("id", manager.getId());
+            return R.ok(userInfo);
+        }
+        Student student = studentService.getById(userID);
+        userInfo.put("name", student.getName());
+        userInfo.put("role", RoleConst.STUDENT);
+        userInfo.put("avatar", student.getAvatar());
+        userInfo.put("id", student.getId());
         return R.ok(userInfo);
     }
 
