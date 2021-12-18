@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @date 2021/12/16 21:07
@@ -24,10 +25,15 @@ public class StudentController {
     @Resource
     StudentService studentService;
 
-    @GetMapping("/list")
-    public R getAllStudent(StudentReqModel reqModel) {
+    @GetMapping("/list/{current}/{limit}")
+    public R getAllStudent(@PathVariable Long current,
+                           @PathVariable Long limit,
+                           StudentReqModel reqModel) {
         log.info("根据条件获取所有学生方法执行，参数：reqModel:{}", reqModel);
-        StudentResponse studentResponse = studentService.selectByWrapper(reqModel);
+        if (current == null || limit == null) {
+            throw new BusinessException(ResultCodeEnum.PARAM_ERROR);
+        }
+        StudentResponse studentResponse = studentService.selectByWrapper(current, limit, reqModel);
         return R.ok(studentResponse);
     }
 
@@ -37,6 +43,10 @@ public class StudentController {
         if (student == null) {
             throw new BusinessException(ResultCodeEnum.PARAM_ERROR);
         }
+        if (student.getId() == null || StrUtil.isBlank(student.getId())) {
+            student.setGmtCreate(new Date());
+        }
+        student.setGmtModified(new Date());
         return studentService.saveOrUpdate(student) ? R.ok() : R.error();
     }
 

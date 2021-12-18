@@ -14,9 +14,14 @@ import com.student.model.Student;
 import com.student.model.req.StuLoginReqModel;
 import com.student.model.req.StudentReqModel;
 import com.student.model.resp.StudentResponse;
+import com.student.service.CollegeService;
+import com.student.service.MajorService;
 import com.student.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @date 2021/12/15 23:17
@@ -25,12 +30,15 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements StudentService {
 
+    @Resource
+    CollegeService collegeService;
+
+    @Resource
+    MajorService majorService;
+
     @Override
-    public StudentResponse selectByWrapper(StudentReqModel reqModel) {
-        if (reqModel.getCurrent() == null || reqModel.getLimit() == null) {
-            throw new BusinessException(ResultCodeEnum.PARAM_ERROR);
-        }
-        Page<Student> page = new Page<>(reqModel.getCurrent(), reqModel.getLimit());
+    public StudentResponse selectByWrapper(Long current, Long limit, StudentReqModel reqModel) {
+        Page<Student> page = new Page<>(current, limit);
         LambdaQueryWrapper<Student> wrapper = Wrappers.lambdaQuery();
         if (reqModel.getName() != null && StrUtil.isNotBlank(reqModel.getName())) {
             wrapper.like(Student::getName, reqModel.getName());
@@ -38,18 +46,23 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         if (reqModel.getStudentId() != null) {
             wrapper.eq(Student::getStudentId, reqModel.getStudentId());
         }
-        if (reqModel.getCollage() != null || StrUtil.isNotBlank(reqModel.getCollage())) {
-            wrapper.eq(Student::getCollage, reqModel.getCollage());
+        if (reqModel.getCollege() != null && StrUtil.isNotBlank(reqModel.getCollege())) {
+            wrapper.eq(Student::getCollege, reqModel.getCollege());
         }
-        if (reqModel.getGrade() != null || StrUtil.isNotBlank(reqModel.getGrade())) {
+        if (reqModel.getGrade() != null && StrUtil.isNotBlank(reqModel.getGrade())) {
             wrapper.eq(Student::getGrade, reqModel.getGrade());
         }
-        if (reqModel.getMajor() != null || StrUtil.isNotBlank(reqModel.getMajor())) {
+        if (reqModel.getMajor() != null && StrUtil.isNotBlank(reqModel.getMajor())) {
             wrapper.eq(Student::getMajor, reqModel.getMajor());
         }
         Page<Student> studentPage = getBaseMapper().selectPage(page, wrapper);
         StudentResponse studentResponse = new StudentResponse();
-        studentResponse.setStudentList(studentPage.getRecords());
+        List<Student> studentList = studentPage.getRecords();
+        studentList.forEach(student -> {
+            student.setCollegeName(collegeService.getById(student.getCollege()).getName());
+            student.setMajorName(majorService.getById(student.getMajor()).getName());
+        });
+        studentResponse.setStudentList(studentList);
         studentResponse.setPages(studentPage.getPages());
         studentResponse.setTotal(studentPage.getTotal());
         return studentResponse;

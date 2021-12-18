@@ -16,7 +16,7 @@ public interface StudentService extends IService<Student> {
      * @param reqModel 条件
      * @return 学生的返回对象
      */
-    StudentResponse selectByWrapper(StudentReqModel reqModel);
+    StudentResponse selectByWrapper(Long current, Long limit, StudentReqModel reqModel);
 
     /**
      * 学生登陆方法

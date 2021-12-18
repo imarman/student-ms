@@ -9,7 +9,7 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="gender" jdbcType="VARCHAR" property="gender" />
-    <result column="collage" jdbcType="VARCHAR" property="collage" />
+    <result column="collage" jdbcType="VARCHAR" property="college" />
     <result column="major" jdbcType="VARCHAR" property="major" />
     <result column="grade" jdbcType="VARCHAR" property="grade" />
     <result column="admission_time" jdbcType="TIMESTAMP" property="admissionTime" />

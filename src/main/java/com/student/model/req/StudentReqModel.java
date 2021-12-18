@@ -25,7 +25,7 @@ public class StudentReqModel extends BasePageModel implements Serializable {
     /**
      * 学院id
      */
-    private String collage;
+    private String college;
 
     /**
      * 专业id

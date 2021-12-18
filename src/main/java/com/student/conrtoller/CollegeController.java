@@ -1,6 +1,7 @@
 package com.student.conrtoller;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.student.common.BusinessException;
@@ -38,6 +39,13 @@ public class CollegeController {
             wrapper.like(College::getName, name);
         }
         return R.ok(collegeService.list(wrapper));
+    }
+
+    @GetMapping("/listByCollege")
+    public R getListByCollegeId(String collegeId) {
+        LambdaQueryWrapper<Major> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(Major::getCollegeId, collegeId);
+        return R.ok(majorService.list(wrapper));
     }
 
     @PostMapping("/saveOrUpdate")

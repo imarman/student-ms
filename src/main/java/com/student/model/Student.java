@@ -1,6 +1,7 @@
 package com.student.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -45,12 +46,24 @@ public class Student implements Serializable {
     /**
      * 学院id
      */
-    private String collage;
+    private String college;
+
+    /**
+     * 学院名称
+     */
+    @TableField(exist = false)
+    private String collegeName;
 
     /**
      * 专业id
      */
     private String major;
+
+    /**
+     * 专业名称
+     */
+    @TableField(exist = false)
+    private String majorName;
 
     /**
      * 年级
