@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.student.common.BusinessException;
 import com.student.common.R;
 import com.student.common.ResultCodeEnum;
-import com.student.model.College;
 import com.student.model.Major;
 import com.student.model.req.MajorReqModel;
 import com.student.model.resp.MajorResponse;
@@ -17,10 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 /**
  * @date 2021/12/16 22:46
@@ -71,6 +68,10 @@ public class MajorController {
         if (major == null) {
             throw new BusinessException(ResultCodeEnum.PARAM_ERROR);
         }
+        if (major.getId() == null || StrUtil.isBlank(major.getId())) {
+            major.setGmtCreate(new Date());
+        }
+        major.setGmtModify(new Date());
         return majorService.saveOrUpdate(major) ? R.ok() : R.error("操作失败");
     }
 

@@ -2,13 +2,14 @@ package com.student.conrtoller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.student.common.BusinessException;
 import com.student.common.R;
 import com.student.common.ResultCodeEnum;
 import com.student.model.College;
+import com.student.model.Major;
 import com.student.service.CollegeService;
+import com.student.service.MajorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,9 @@ public class CollegeController {
 
     @Resource
     CollegeService collegeService;
+
+    @Resource
+    MajorService majorService;
 
     @GetMapping("/list")
     public R getList(String name) {
@@ -54,6 +58,13 @@ public class CollegeController {
         log.info("学院的删除方法执行，参数：collegeId:{}", collegeId);
         if (collegeId == null || StrUtil.isBlank(collegeId)) {
             throw new BusinessException(ResultCodeEnum.PARAM_ERROR);
+        }
+        // 如果有专业关联，就不能删除
+        LambdaQueryWrapper<Major> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(Major::getCollegeId, collegeId);
+        Major major = majorService.getOne(queryWrapper);
+        if (major != null) {
+            throw new BusinessException("该学院有关联的专业，请取消关联在删除～");
         }
         return collegeService.removeById(collegeId) ? R.ok("删除成功") : R.error("删除失败");
     }
