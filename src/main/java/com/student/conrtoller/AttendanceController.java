@@ -11,7 +11,6 @@ import com.student.model.Attendance;
 import com.student.model.resp.AttendanceResponse;
 import com.student.service.AttendanceService;
 import com.student.service.StudentService;
-import lombok.CustomLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
