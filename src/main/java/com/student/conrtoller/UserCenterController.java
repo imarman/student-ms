@@ -9,6 +9,7 @@ import com.student.common.RoleConst;
 import com.student.model.Manager;
 import com.student.model.Student;
 import com.student.model.req.ChangePwdReqModel;
+import com.student.service.CollegeService;
 import com.student.service.MajorService;
 import com.student.service.ManagerService;
 import com.student.service.StudentService;
@@ -32,8 +33,11 @@ public class UserCenterController {
     @Resource
     StudentService studentService;
 
-    // @Resource
-    // MajorService
+    @Resource
+    MajorService majorService;
+
+    @Resource
+    CollegeService collegeService;
 
     @GetMapping("/manager/userinfo")
     public R getInfo(String id) {
@@ -55,6 +59,8 @@ public class UserCenterController {
         log.info("获取学生信息方法执行，参数：id:{}", id);
         Student user = studentService.getById(id);
         user.setPassword(null);
+        user.setCollegeName(collegeService.getById(user.getCollege()).getName());
+        user.setMajorName(majorService.getById(user.getMajor()).getName());
         return R.ok(user);
     }
 
