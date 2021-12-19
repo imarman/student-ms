@@ -1,6 +1,7 @@
 package com.student.conrtoller;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.digest.MD5;
 import com.student.common.BusinessException;
 import com.student.common.R;
 import com.student.common.ResultCodeEnum;
@@ -46,6 +47,11 @@ public class StudentController {
         if (student.getId() == null || StrUtil.isBlank(student.getId())) {
             student.setGmtCreate(new Date());
         }
+        String MD5Pwd = MD5.create().digestHex16("123");
+        if (StrUtil.isNotBlank(student.getPassword())) {
+            MD5Pwd = MD5.create().digestHex16(student.getPassword());
+        }
+        student.setPassword(MD5Pwd);
         student.setGmtModified(new Date());
         return studentService.saveOrUpdate(student) ? R.ok() : R.error();
     }
