@@ -38,6 +38,11 @@ public class StudentController {
         return R.ok(studentResponse);
     }
 
+    @GetMapping("/all")
+    public R getAll() {
+        return R.ok(studentService.list());
+    }
+
     @PostMapping("/saveOrUpdate")
     public R saveOrUpdateStudent(@RequestBody Student student) {
         log.info("新增或修改学生方法执行，参数：student:{}", student);

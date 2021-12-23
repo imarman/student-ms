@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,7 +51,8 @@ public class AttendanceController {
 
         records.forEach(attendance -> {
             if (attendance.getStudentId() != null && StrUtil.isNotBlank(attendance.getStudentId())) {
-                Student student = studentService.getById(attendance.getStudentId());
+                LambdaQueryWrapper<Student> queryWrapper = Wrappers.lambdaQuery();
+                Student student = studentService.getOne(queryWrapper.eq(Student::getStudentId, attendance.getStudentId()));
                 if (student != null){
                     attendance.setStudentName(student.getName());
                 }
@@ -72,9 +74,13 @@ public class AttendanceController {
     @PostMapping("/saveOrUpdate")
     public R saveOrUpdate(@RequestBody Attendance attendance) {
         log.info("保存或更新考勤方法执行，参数：attendance:{}", attendance);
-        if (attendance != null) {
+        if (attendance == null) {
             throw new BusinessException(ResultCodeEnum.PARAM_ERROR);
         }
+        if (attendance.getId() == null || StrUtil.isBlank(attendance.getId())) {
+            attendance.setGmtCreate(new Date());
+        }
+        attendance.setGmtModified(new Date());
         return attendanceService.saveOrUpdate(attendance) ? R.ok() : R.error();
 
     }
