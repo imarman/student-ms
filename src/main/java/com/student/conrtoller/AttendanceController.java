@@ -8,6 +8,7 @@ import com.student.common.BusinessException;
 import com.student.common.R;
 import com.student.common.ResultCodeEnum;
 import com.student.model.Attendance;
+import com.student.model.Student;
 import com.student.model.resp.AttendanceResponse;
 import com.student.service.AttendanceService;
 import com.student.service.StudentService;
@@ -49,7 +50,10 @@ public class AttendanceController {
 
         records.forEach(attendance -> {
             if (attendance.getStudentId() != null && StrUtil.isNotBlank(attendance.getStudentId())) {
-                attendance.setStudentName(studentService.getById(attendance.getStudentId()).getName());
+                Student student = studentService.getById(attendance.getStudentId());
+                if (student != null){
+                    attendance.setStudentName(student.getName());
+                }
             }
         });
         AttendanceResponse response = new AttendanceResponse();
