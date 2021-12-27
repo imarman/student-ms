@@ -43,6 +43,12 @@ public class StudentController {
         return R.ok(studentService.list());
     }
 
+    @GetMapping("/getById")
+    public R getById(String id) {
+        log.info("根据id获取学生方法执行，参数：id:{}", id);
+        return R.ok(studentService.getById(id));
+    }
+
     @PostMapping("/saveOrUpdate")
     public R saveOrUpdateStudent(@RequestBody Student student) {
         log.info("新增或修改学生方法执行，参数：student:{}", student);
