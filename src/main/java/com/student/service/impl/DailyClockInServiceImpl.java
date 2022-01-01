@@ -1,18 +1,29 @@
 package com.student.service.impl;
 
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.student.mapper.DailyClockInMapper;
 import com.student.model.DailyClockIn;
 import com.student.model.Student;
+import com.student.model.req.ClockInReqModel;
+import com.student.model.resp.ClockInResponse;
+import com.student.model.resp.StudentResponse;
 import com.student.service.DailyClockInService;
 import com.student.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @date 2022/1/1 12:14
@@ -41,6 +52,33 @@ public class DailyClockInServiceImpl extends ServiceImpl<DailyClockInMapper, Dai
         }
         log.info("学生(id:{}, 今日未打卡)", id);
         return null;
+    }
+
+    @Override
+    public ClockInResponse selectByWrapper(Long current, Long limit, ClockInReqModel reqModel) {
+        Page<DailyClockIn> page = new Page<>(current, limit);
+        LambdaQueryWrapper<DailyClockIn> wrapper = Wrappers.lambdaQuery();
+        if (reqModel.getStudentId() != null && StrUtil.isNotBlank(reqModel.getStudentId())) {
+            wrapper.like(DailyClockIn::getStudentId, reqModel.getStudentId());
+        }
+        if (reqModel.getGmtCreate() != null) {
+            log.error(reqModel.getGmtCreate().toString("yyyy-MM-dd"));
+            // wrapper.apply("date_format(gmt_create,'%Y-%m-%d') = {0}", "str_to_date(" + reqModel.getGmtCreate().toString("yyyy-MM-dd") + ",'%Y-%m-%d')");
+            wrapper.apply("date_format(gmt_create,'%Y-%m-%d') = {0}", reqModel.getGmtCreate().toString("yyyy-MM-dd"));
+        }
+        wrapper.orderByDesc(DailyClockIn::getGmtCreate);
+        Page<DailyClockIn> dailyClockInPage = getBaseMapper().selectPage(page, wrapper);
+        ClockInResponse clockInResponse = new ClockInResponse();
+        List<DailyClockIn> dailyClockIns = dailyClockInPage.getRecords();
+        dailyClockIns.forEach(dailyClockIn -> {
+            Student student = studentService.getOne(new LambdaQueryWrapper<Student>().eq(Student::getStudentId, dailyClockIn.getStudentId()));
+            dailyClockIn.setStudentName(student.getName());
+            dailyClockIn.setGrade(student.getGrade());
+        });
+        clockInResponse.setDailyClockIns(dailyClockIns);
+        clockInResponse.setPages(dailyClockInPage.getPages());
+        clockInResponse.setTotal(dailyClockInPage.getTotal());
+        return clockInResponse;
     }
 
     private boolean isToday(LocalDateTime localTime) {
