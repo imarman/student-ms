@@ -10,5 +10,28 @@ public interface ApplyingConst {
      */
     String APPLYING = "applying";
 
+    /**
+     * 通过
+     */
+    String PASS = "pass";
+
+    /**
+     * 拒绝
+     */
+    String REJECTED = "rejected";
+
+
+    // 类型
+
+    /**
+     * 请假
+     */
+    String LEAVE = "leave";
+
+    /**
+     * 奖学金
+     */
+    String SCHOLARSHIP = "scholarship";
+
 
 }
