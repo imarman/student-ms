@@ -34,9 +34,13 @@ public class StpInterfaceImpl implements StpInterface {
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
         String id = (String) StpUtil.getLoginId();
-        Manager sysUser = sysUserService.getById(id);
         ArrayList<String> strings = new ArrayList<>();
-        strings.add(sysUser.getRole());
+        Manager sysUser = sysUserService.getById(id);
+        if (sysUser != null) {
+            strings.add(sysUser.getRole());
+            return strings;
+        }
+        strings.add("STUDENT");
         return strings;
     }
 

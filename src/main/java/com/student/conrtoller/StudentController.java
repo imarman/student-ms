@@ -1,5 +1,7 @@
 package com.student.conrtoller;
 
+import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaMode;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.MD5;
 import com.student.common.BusinessException;
@@ -26,6 +28,7 @@ public class StudentController {
     @Resource
     StudentService studentService;
 
+    @SaCheckRole(value = {"TEACHER", "ADMIN"}, mode = SaMode.OR)
     @GetMapping("/list/{current}/{limit}")
     public R getAllStudent(@PathVariable Long current,
                            @PathVariable Long limit,

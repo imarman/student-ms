@@ -5,6 +5,8 @@ package com.student.common;
  */
 public interface ApplyingConst {
 
+    // ==================================== 申请状态 ====================================
+
     /**
      * 申请
      */
@@ -21,7 +23,7 @@ public interface ApplyingConst {
     String REJECTED = "rejected";
 
 
-    // 类型
+    // ==================================== 类型 ====================================
 
     /**
      * 请假
