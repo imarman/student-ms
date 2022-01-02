@@ -35,7 +35,7 @@ public class MajorController {
 
     @GetMapping("/list/{current}/{limit}")
     public R getList(@PathVariable Long current,
-                     @PathVariable Long limit,MajorReqModel reqModel) {
+                     @PathVariable Long limit, MajorReqModel reqModel) {
         log.info("获取所有专业方法执行，参数：reqModel:{}", reqModel);
         if (limit == null || current == null) {
             throw new BusinessException(ResultCodeEnum.PARAM_ERROR);

@@ -1,7 +1,7 @@
 package com.student.common;
 
 /**
- * @date 2021/12/14 16:00
+ * @date 2021/12/20 16:00
  */
 public interface ApplyingConst {
 

@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 自定义权限验证接口扩展
  */
-@Configuration    // 保证此类被SpringBoot扫描，完成Sa-Token的自定义权限验证扩展
+@Configuration
 public class StpInterfaceImpl implements StpInterface {
 
     @Resource

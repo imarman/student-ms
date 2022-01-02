@@ -1,7 +1,6 @@
 package com.student.model.resp;
 
 import com.student.model.Major;
-import com.student.model.Student;
 import lombok.Data;
 
 import java.io.Serializable;

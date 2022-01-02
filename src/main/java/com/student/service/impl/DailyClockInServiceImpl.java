@@ -1,10 +1,8 @@
 package com.student.service.impl;
 
-import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.student.mapper.DailyClockInMapper;
@@ -12,17 +10,14 @@ import com.student.model.DailyClockIn;
 import com.student.model.Student;
 import com.student.model.req.ClockInReqModel;
 import com.student.model.resp.ClockInResponse;
-import com.student.model.resp.StudentResponse;
 import com.student.service.DailyClockInService;
 import com.student.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**

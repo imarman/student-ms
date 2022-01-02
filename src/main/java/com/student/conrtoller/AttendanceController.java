@@ -53,7 +53,7 @@ public class AttendanceController {
             if (attendance.getStudentId() != null && StrUtil.isNotBlank(attendance.getStudentId())) {
                 LambdaQueryWrapper<Student> queryWrapper = Wrappers.lambdaQuery();
                 Student student = studentService.getOne(queryWrapper.eq(Student::getStudentId, attendance.getStudentId()));
-                if (student != null){
+                if (student != null) {
                     attendance.setStudentName(student.getName());
                 }
             }

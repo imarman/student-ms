@@ -34,7 +34,6 @@ public class LoginController {
 
     @PostMapping("/login")
     public R login(@RequestBody LoginReqModel loginReqModel) {
-
         boolean res = managerService.login(loginReqModel);
         if (res) {
             SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
@@ -71,7 +70,7 @@ public class LoginController {
         log.info("获取用户信息");
         String userID = (String) StpUtil.getLoginId();
         Manager manager = managerService.getById(userID);
-        HashMap<String,Object> userInfo = new HashMap<>();
+        HashMap<String, Object> userInfo = new HashMap<>();
         if (manager != null) {
             userInfo.put("name", manager.getUsername());
             userInfo.put("role", manager.getRole());

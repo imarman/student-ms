@@ -75,7 +75,7 @@ public class UserCenterController {
     public R changePwd(@RequestBody ChangePwdReqModel reqModel) {
         log.info("更改密码方法执行，参数：reqModel:{}", reqModel);
 
-        if(RoleConst.STUDENT.equals(reqModel.getRole())) {
+        if (RoleConst.STUDENT.equals(reqModel.getRole())) {
             Student student = studentService.getById(reqModel.getId());
             // 对输入的老密码进行加密
             String encryptOldPwd = MD5.create().digestHex16(reqModel.getOldPassword());

@@ -1,13 +1,11 @@
 package com.student.conrtoller;
 
-import cn.dev33.satoken.stp.StpUtil;
 import com.student.common.BusinessException;
 import com.student.common.R;
 import com.student.common.ResultCodeEnum;
 import com.student.model.DailyClockIn;
 import com.student.model.req.ClockInReqModel;
 import com.student.model.resp.ClockInResponse;
-import com.student.model.resp.StudentResponse;
 import com.student.service.DailyClockInService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
