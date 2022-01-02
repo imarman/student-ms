@@ -16,4 +16,8 @@
     <!--@mbg.generated-->
     id, stu_id, content, pic, `status`, gmt_create, gmt_modified
   </sql>
+
+  <update id="updateStatus" parameterType="com.student.model.req.ApplyReqModel">
+    update `apply` set `status` = #{status,jdbcType=VARCHAR} where id = #{id}
+  </update>
 </mapper>

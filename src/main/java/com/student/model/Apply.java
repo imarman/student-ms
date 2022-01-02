@@ -28,6 +28,12 @@ public class Apply implements Serializable {
     private String stuId;
 
     /**
+     * 学生学号
+     */
+    @TableField(exist = false)
+    private Long studentId;
+
+    /**
      * 学生姓名
      */
     @TableField(exist = false)
